@@ -23,7 +23,7 @@ struct BrightSync: ParsableCommand {
               brightsync --once              sync once and exit
               brightsync --min 10 --gamma 1.4
             """,
-        version: "0.1.0"
+        version: "0.1.1"
     )
 
     @Flag(help: "List displays and current values, then exit.")

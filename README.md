@@ -22,10 +22,13 @@ brew services start brightsync
 ## Usage
 
 ```
-brightsync            run in the foreground
-brightsync --list     show displays and current values, then exit
-brightsync --once     sync once and exit
-brightsync --help     all flags
+brightsync                     run in the foreground
+brightsync --list              show displays and current values, then exit
+brightsync --once              sync once and exit
+brightsync --set-external 40   write luminance percent (0-100) to all
+                               external displays and exit; the next
+                               brightness change re-syncs over it
+brightsync --help              all flags
 ```
 
 ## Configuration
