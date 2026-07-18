@@ -49,7 +49,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                    config.intervalMs, config.clamshellKeys ? "on" : "off"))
     }
 
-    /// Reopening the app (Finder double-click, `open -a Brightsync`) presents
+    /// Reopening the app (Finder double-click, `open -a BrightSync`) presents
     /// Settings - the universal "where did it go" gesture, and the escape
     /// hatch when the menu bar icon is hidden.
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
@@ -85,7 +85,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    /// Brightsync is useless unless it runs, so the first launch of the
+    /// BrightSync is useless unless it runs, so the first launch of the
     /// installed app opts into launch at login (macOS shows its standard
     /// notification); the Settings toggle rules afterwards. Dev builds run
     /// unbundled and must not register themselves as login items.
@@ -110,7 +110,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         let appItem = NSMenuItem()
         let appMenu = NSMenu()
-        appMenu.addItem(NSMenuItem(title: "Quit Brightsync", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+        appMenu.addItem(NSMenuItem(title: "Quit BrightSync", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
         appItem.submenu = appMenu
         mainMenu.addItem(appItem)
 

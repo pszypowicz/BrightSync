@@ -96,7 +96,7 @@ func draw(scale: CGFloat) -> NSBitmapImageRep {
     arrow.lineWidth = 1
     arrow.stroke()
 
-    let hint = "Drag Brightsync into Applications"
+    let hint = "Drag BrightSync into Applications"
     let attributes: [NSAttributedString.Key: Any] = [
         .font: NSFont.systemFont(ofSize: 15, weight: .semibold),
         .foregroundColor: fill,

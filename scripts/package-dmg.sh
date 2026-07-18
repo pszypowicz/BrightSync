@@ -3,7 +3,7 @@ set -euo pipefail
 
 usage() {
   cat <<'EOF'
-Package a signed, notarized, stapled Brightsync DMG: the classic installer
+Package a signed, notarized, stapled BrightSync DMG: the classic installer
 window with the app on the left and an Applications-folder link on the
 right, over Packaging/dmg-background.tiff (icon coordinates here and in
 generate-dmg-background.swift must agree).
@@ -11,10 +11,10 @@ generate-dmg-background.swift must agree).
 Usage: scripts/package-dmg.sh [--app <path>] [--output <path>] [--keychain-profile <name>]
 
 Flags:
-  --app               App bundle to package (default: dist/Brightsync.app).
+  --app               App bundle to package (default: dist/BrightSync.app).
                       Must already be Developer ID signed (and stapled, so
                       the app inside the DMG carries its own ticket).
-  --output            Path of the .dmg to write (default: dist/Brightsync.dmg)
+  --output            Path of the .dmg to write (default: dist/BrightSync.dmg)
   --keychain-profile  notarytool keychain profile (default: brightsync-notary)
   -h, --help          Show this help.
 
@@ -23,8 +23,8 @@ signing identity is a hard error, never a downgrade.
 EOF
 }
 
-app="dist/Brightsync.app"
-dmg="dist/Brightsync.dmg"
+app="dist/BrightSync.app"
+dmg="dist/BrightSync.dmg"
 profile=brightsync-notary
 
 while [[ $# -gt 0 ]]; do
@@ -72,14 +72,14 @@ cp -R "$app" "$staging/"
 
 rm -f "$dmg"
 create-dmg \
-  --volname "Brightsync" \
+  --volname "BrightSync" \
   --volicon Packaging/AppIcon.icns \
   --background Packaging/dmg-background.tiff \
   --window-pos 200 120 \
   --window-size 660 400 \
   --icon-size 128 \
-  --icon "Brightsync.app" 165 185 \
-  --hide-extension "Brightsync.app" \
+  --icon "BrightSync.app" 165 185 \
+  --hide-extension "BrightSync.app" \
   --app-drop-link 495 185 \
   --no-internet-enable \
   "$dmg" "$staging"

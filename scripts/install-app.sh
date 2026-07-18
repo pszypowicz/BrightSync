@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Installs Brightsync.app and starts it.
+# Installs BrightSync.app and starts it.
 set -euo pipefail
 
 usage() {
   cat <<'EOF'
-Install Brightsync.app and start it.
+Install BrightSync.app and start it.
 
 Builds the app (unless --skip-build), quits any running copy, replaces it,
 and launches the new one in the background. The app registers launch at
@@ -15,7 +15,7 @@ Usage: scripts/install-app.sh [--app-dir <dir>] [--sign <identity>] [--skip-buil
 Options:
   --app-dir <dir>    Install destination (default: /Applications)
   --sign <identity>  Code-signing identity passed to build-app.sh
-  --skip-build       Use the existing dist/Brightsync.app instead of rebuilding
+  --skip-build       Use the existing dist/BrightSync.app instead of rebuilding
   -h, --help         Show this help.
 
 Example:
@@ -47,15 +47,15 @@ if [[ $skip_build -eq 0 ]]; then
   build_args=(--output dist)
   [[ -n "$sign" ]] && build_args+=(--sign "$sign")
   scripts/build-app.sh "${build_args[@]}"
-elif [[ ! -d dist/Brightsync.app ]]; then
-  echo "error: dist/Brightsync.app not found; run without --skip-build first" >&2
+elif [[ ! -d dist/BrightSync.app ]]; then
+  echo "error: dist/BrightSync.app not found; run without --skip-build first" >&2
   exit 1
 fi
 
-app="$app_dir/Brightsync.app"
-pkill -x brightsync 2> /dev/null || true
+app="$app_dir/BrightSync.app"
+pkill -x BrightSync 2> /dev/null || true
 rm -rf "$app"
-cp -R dist/Brightsync.app "$app"
+cp -R dist/BrightSync.app "$app"
 open -g "$app"
 
 echo "installed $app"

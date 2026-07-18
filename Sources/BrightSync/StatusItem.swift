@@ -20,7 +20,7 @@ final class StatusItemController: NSObject {
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         item.button?.image = NSImage(
             systemSymbolName: "sun.max",
-            accessibilityDescription: "Brightsync"
+            accessibilityDescription: "BrightSync"
         )
 
         let menu = NSMenu()
@@ -31,13 +31,13 @@ final class StatusItemController: NSObject {
         settingsItem.image = NSImage(systemSymbolName: "gearshape", accessibilityDescription: nil)
         menu.addItem(settingsItem)
 
-        let aboutItem = NSMenuItem(title: "About Brightsync", action: #selector(showAbout), keyEquivalent: "")
+        let aboutItem = NSMenuItem(title: "About BrightSync", action: #selector(showAbout), keyEquivalent: "")
         aboutItem.target = self
         aboutItem.image = NSImage(systemSymbolName: "info.circle", accessibilityDescription: nil)
         menu.addItem(aboutItem)
         menu.addItem(.separator())
 
-        let quitItem = NSMenuItem(title: "Quit Brightsync", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        let quitItem = NSMenuItem(title: "Quit BrightSync", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         quitItem.target = NSApp
         menu.addItem(quitItem)
 

@@ -27,7 +27,7 @@ struct SettingsView: View {
                     Label("Clamshell Brightness Keys", systemImage: "keyboard")
                 }
             } footer: {
-                Text("With the icon hidden, open Brightsync again to get back here. Clamshell keys need the Accessibility permission.")
+                Text("With the icon hidden, open BrightSync again to get back here. Clamshell keys need the Accessibility permission.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -94,6 +94,6 @@ struct SettingsView: View {
     }
 
     static func showWindow() {
-        UtilityWindow.show(id: "brightsync-settings", title: "Brightsync Settings", content: SettingsView())
+        UtilityWindow.show(id: "brightsync-settings", title: "BrightSync Settings", content: SettingsView())
     }
 }

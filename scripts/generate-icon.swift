@@ -1,5 +1,5 @@
 #!/usr/bin/env swift
-// Renders the brightsync app icon (dark rounded rect with a sun) at every
+// Renders the BrightSync app icon (dark rounded rect with a sun) at every
 // size an .icns needs and packs them with iconutil. The sun is drawn by
 // hand - SF Symbols are not licensed for use in app icons.
 import AppKit
@@ -7,7 +7,7 @@ import Foundation
 
 func usage() {
     print("""
-        Render the brightsync app icon into an .icns (and optionally a PNG).
+        Render the BrightSync app icon into an .icns (and optionally a PNG).
 
         Usage: scripts/generate-icon.swift [--output <path>] [--png <path>] [-h|--help]
 

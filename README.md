@@ -1,11 +1,11 @@
-# brightsync
+# BrightSync
 
-<img src="Packaging/AppIcon.png" alt="Brightsync icon" width="120" align="right">
+<img src="Packaging/AppIcon.png" alt="BrightSync icon" width="120" align="right">
 
 Mirror the built-in display brightness of an Apple Silicon Mac to external
 displays over DDC/CI.
 
-> **Beta**: Brightsync is pre-1.0. Backward compatibility is not guaranteed
+> **Beta**: BrightSync is pre-1.0. Backward compatibility is not guaranteed
 > until version 1.0.0 is reached.
 
 Change brightness with the keyboard, Control Center, or let the ambient light
@@ -23,12 +23,12 @@ working exactly as they do on the built-in display (see
 ## Install
 
 ```sh
-brew install --cask pszypowicz/tap/brightsync
+brew install --cask pszypowicz/tap/bright-sync
 ```
 
 Or grab the `.dmg` from the
-[latest release](https://github.com/pszypowicz/brightsync/releases/latest)
-and drag Brightsync into Applications.
+[latest release](https://github.com/pszypowicz/BrightSync/releases/latest)
+and drag BrightSync into Applications.
 
 Either way, the app enables launch at login on its first run (visible under
 System Settings > General > Login Items & Extensions; toggle it any time in
@@ -48,7 +48,7 @@ for an unsigned build.
 For a `brightsync` command on your PATH, symlink the app binary:
 
 ```sh
-sudo ln -sf /Applications/Brightsync.app/Contents/MacOS/brightsync /usr/local/bin/brightsync
+sudo ln -sf /Applications/BrightSync.app/Contents/MacOS/BrightSync /usr/local/bin/brightsync
 ```
 
 The daemon logs to the unified log:

@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
-# Assembles Brightsync.app from the SwiftPM release build: binary, Info.plist
+# Assembles BrightSync.app from the SwiftPM release build: binary, Info.plist
 # (version taken from the binary itself), icon, hardened-runtime signature.
 set -euo pipefail
 
 usage() {
   cat <<'EOF'
-Build Brightsync.app from the SwiftPM release build.
+Build BrightSync.app from the SwiftPM release build.
 
 Usage: scripts/build-app.sh [--output <dir>] [--sign <identity>] [-h|--help]
 
 Options:
-  --output <dir>     Directory to place Brightsync.app in (default: dist)
+  --output <dir>     Directory to place BrightSync.app in (default: dist)
   --sign <identity>  Codesign identity, matched as a substring against
                      'security find-identity' output (default: "Developer ID
                      Application", the release identity - dev builds too, so
@@ -44,13 +44,13 @@ repo="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$repo"
 
 swift build -c release
-binary=".build/release/brightsync"
+binary=".build/release/BrightSync"
 version="$("$binary" --version)"
 
-app="$output/Brightsync.app"
+app="$output/BrightSync.app"
 rm -rf "$app"
 mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
-cp "$binary" "$app/Contents/MacOS/brightsync"
+cp "$binary" "$app/Contents/MacOS/BrightSync"
 sed "s/__VERSION__/$version/g" Packaging/Info.plist > "$app/Contents/Info.plist"
 plutil -lint "$app/Contents/Info.plist" > /dev/null
 cp Packaging/AppIcon.icns "$app/Contents/Resources/AppIcon.icns"

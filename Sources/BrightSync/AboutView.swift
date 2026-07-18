@@ -8,7 +8,7 @@ func formatVersion(base: String) -> String {
     #endif
 }
 
-private let repoURL = URL(string: "https://github.com/pszypowicz/brightsync")!
+private let repoURL = URL(string: "https://github.com/pszypowicz/BrightSync")!
 private let sponsorURL = URL(string: "https://github.com/sponsors/pszypowicz")!
 
 struct AboutView: View {
@@ -26,7 +26,7 @@ struct AboutView: View {
                 .resizable()
                 .frame(width: 64, height: 64)
 
-            Text("Brightsync")
+            Text("BrightSync")
                 .font(.title.bold())
 
             Text("Version \(version)")
@@ -55,6 +55,6 @@ struct AboutView: View {
     }
 
     static func showWindow() {
-        UtilityWindow.show(id: "about-brightsync", title: "About Brightsync", content: AboutView())
+        UtilityWindow.show(id: "about-brightsync", title: "About BrightSync", content: AboutView())
     }
 }

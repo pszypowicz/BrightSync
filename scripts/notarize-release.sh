@@ -3,9 +3,9 @@ set -euo pipefail
 
 usage() {
   cat <<'EOF'
-Build a release Brightsync.app signed with Developer ID, notarize it,
-staple the ticket, and produce the release assets: Brightsync-<version>.zip
-(for the Homebrew cask) and Brightsync-<version>.dmg (drag-to-Applications
+Build a release BrightSync.app signed with Developer ID, notarize it,
+staple the ticket, and produce the release assets: BrightSync-<version>.zip
+(for the Homebrew cask) and BrightSync-<version>.dmg (drag-to-Applications
 installer), both rebuilt after stapling so they carry the ticket.
 
 Usage: scripts/notarize-release.sh [--keychain-profile <name>]
@@ -37,9 +37,9 @@ cd "$repo"
 
 scripts/build-app.sh --sign "Developer ID Application"
 
-app="dist/Brightsync.app"
-version="$("$app/Contents/MacOS/brightsync" --version)"
-zip="dist/Brightsync-$version.zip"
+app="dist/BrightSync.app"
+version="$("$app/Contents/MacOS/BrightSync" --version)"
+zip="dist/BrightSync-$version.zip"
 
 # build-app.sh hard-errors on a missing identity; this guards the outcome
 # anyway - a release must never ship with a different signature.
@@ -63,4 +63,4 @@ echo "Release asset: $zip"
 shasum -a 256 "$zip"
 
 # The DMG is packaged from the stapled app and notarized in its own right.
-scripts/package-dmg.sh --app "$app" --output "dist/Brightsync-$version.dmg" --keychain-profile "$profile"
+scripts/package-dmg.sh --app "$app" --output "dist/BrightSync-$version.dmg" --keychain-profile "$profile"
