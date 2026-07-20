@@ -1,0 +1,242 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 380" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>BrightSync keeps a laptop and an external display at the same brightness. In the first half of the loop a sun arcs around the laptop and the ambient light sensor drives both displays; in the second half the laptop's brightness key drives both together.</title>
+
+  <defs>
+    <radialGradient id="sunCore" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#fff1c9"/>
+      <stop offset="100%" stop-color="#f0b429"/>
+    </radialGradient>
+    <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f0b429" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#f0b429" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="screenGlow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff8e6"/>
+      <stop offset="100%" stop-color="#ffe0a0"/>
+    </linearGradient>
+    <linearGradient id="meterFill" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#e3b341"/>
+      <stop offset="100%" stop-color="#f5c453"/>
+    </linearGradient>
+    <clipPath id="card">
+      <rect x="10" y="10" width="800" height="360" rx="14"/>
+    </clipPath>
+  </defs>
+
+  <!-- ============ CARD ============ -->
+  <rect x="10" y="10" width="800" height="360" rx="14" fill="#161b22" stroke="#30363d"/>
+
+  <!-- ============ SKY: first half only - sun arcs around the laptop, then sets ============ -->
+  <g clip-path="url(#card)">
+    <g>
+      <animateMotion dur="12s" repeatCount="indefinite" calcMode="linear"
+                     path="M120 214 Q220 -44 320 214"
+                     keyTimes="0;0.08;0.25;0.42;0.5;1"
+                     keyPoints="0;0.18;0.5;0.82;1;1"/>
+      <g opacity="0">
+        <animate attributeName="opacity" dur="12s" repeatCount="indefinite"
+                 keyTimes="0;0.05;0.25;0.45;0.5;1" values="0;0.5;1;0.5;0;0"/>
+        <circle r="20" fill="url(#sunGlow)">
+          <animate attributeName="r" dur="12s" repeatCount="indefinite"
+                   keyTimes="0;0.05;0.25;0.45;0.5;1" values="20;28;36;26;20;20"/>
+        </circle>
+        <g stroke="#f0b429" stroke-width="2.4" stroke-linecap="round">
+          <animateTransform attributeName="transform" type="scale" dur="12s" repeatCount="indefinite"
+                            keyTimes="0;0.05;0.25;0.45;0.5;1" values="0.85;0.95;1.15;0.95;0.85;0.85"/>
+          <line x1="0" y1="-16" x2="0" y2="-23"/>
+          <line x1="11.3" y1="-11.3" x2="16.3" y2="-16.3"/>
+          <line x1="16" y1="0" x2="23" y2="0"/>
+          <line x1="11.3" y1="11.3" x2="16.3" y2="16.3"/>
+          <line x1="0" y1="16" x2="0" y2="23"/>
+          <line x1="-11.3" y1="11.3" x2="-16.3" y2="16.3"/>
+          <line x1="-16" y1="0" x2="-23" y2="0"/>
+          <line x1="-11.3" y1="-11.3" x2="-16.3" y2="-16.3"/>
+        </g>
+        <circle r="13" fill="url(#sunCore)"/>
+      </g>
+    </g>
+    <!-- ground below the horizon hides the sun as it rises and sets -->
+    <rect x="10" y="210" width="800" height="160" fill="#161b22"/>
+    <line x1="24" y1="210" x2="796" y2="210" stroke="#30363d" stroke-width="1" opacity="0.55"/>
+  </g>
+
+  <!-- ============ HEADER ============ -->
+  <g transform="translate(46,40)">
+    <circle r="7" fill="url(#sunCore)"/>
+    <g stroke="#f0b429" stroke-width="1.8" stroke-linecap="round">
+      <line x1="0" y1="-10" x2="0" y2="-13"/>
+      <line x1="7.1" y1="-7.1" x2="9.2" y2="-9.2"/>
+      <line x1="10" y1="0" x2="13" y2="0"/>
+      <line x1="7.1" y1="7.1" x2="9.2" y2="9.2"/>
+      <line x1="0" y1="10" x2="0" y2="13"/>
+      <line x1="-7.1" y1="7.1" x2="-9.2" y2="9.2"/>
+      <line x1="-10" y1="0" x2="-13" y2="0"/>
+      <line x1="-7.1" y1="-7.1" x2="-9.2" y2="-9.2"/>
+    </g>
+  </g>
+  <text x="66" y="46" font-size="16" font-weight="600" fill="#e6edf3">BrightSync</text>
+  <text x="782" y="45" text-anchor="end" font-size="12" fill="#8b949e">brightness in sync</text>
+  <line x1="30" y1="62" x2="790" y2="62" stroke="#21262d"/>
+
+  <!-- ============ LAPTOP (built-in display) ============ -->
+  <g>
+    <rect x="150" y="132" width="140" height="86" rx="7" fill="#2a2f37" stroke="#3a4048"/>
+    <rect x="156" y="138" width="128" height="70" rx="3" fill="#0b0e14"/>
+    <rect x="156" y="138" width="128" height="70" rx="3" fill="url(#screenGlow)" opacity="0.31">
+      <animate attributeName="opacity" dur="12s" repeatCount="indefinite"
+               keyTimes="0;0.08;0.25;0.42;0.5;0.6;0.68;0.78;0.86;0.94;1"
+               values="0.31;0.34;0.88;0.38;0.31;0.6;0.85;0.85;0.56;0.34;0.31"/>
+    </rect>
+    <!-- ambient light sensor on the top bezel (reads the sun in the first half) -->
+    <circle cx="220" cy="135" r="2.4" fill="#8b949e"/>
+    <circle cx="220" cy="135" r="3" fill="none" stroke="#f0b429" stroke-width="1.5" opacity="0">
+      <animate attributeName="r" dur="12s" repeatCount="indefinite"
+               keyTimes="0;0.12;0.2;0.22;1" values="3;3;12;3;3"/>
+      <animate attributeName="opacity" dur="12s" repeatCount="indefinite"
+               keyTimes="0;0.12;0.13;0.2;0.22;1" values="0;0;0.7;0;0;0"/>
+    </circle>
+    <circle cx="220" cy="135" r="3" fill="none" stroke="#f0b429" stroke-width="1.5" opacity="0">
+      <animate attributeName="r" dur="12s" repeatCount="indefinite"
+               keyTimes="0;0.32;0.4;0.42;1" values="3;3;12;3;3"/>
+      <animate attributeName="opacity" dur="12s" repeatCount="indefinite"
+               keyTimes="0;0.32;0.33;0.4;0.42;1" values="0;0;0.7;0;0;0"/>
+    </circle>
+    <path d="M150 218 H290 L308 232 H132 Z" fill="#21262d" stroke="#3a4048"/>
+    <line x1="164" y1="225" x2="276" y2="225" stroke="#2a2f37"/>
+  </g>
+
+  <!-- brightness key callout on the laptop keyboard (drives brightness in the second half) -->
+  <g>
+    <rect x="196" y="248" width="48" height="28" rx="6" fill="#21262d" stroke="#3a4048"/>
+    <rect x="196" y="248" width="48" height="28" rx="6" fill="#e3b341" stroke="#f5c453" opacity="0">
+      <animate attributeName="opacity" dur="12s" repeatCount="indefinite"
+               keyTimes="0;0.54;0.57;0.92;0.95;1" values="0;0;0.16;0.16;0;0"/>
+    </rect>
+    <g transform="translate(220,262)">
+      <animateTransform attributeName="transform" type="translate" dur="12s" repeatCount="indefinite"
+                        additive="sum"
+                        keyTimes="0;0.58;0.61;0.66;0.69;0.84;0.87;0.92;0.95;1"
+                        values="0 0;0 0;0 2.4;0 0;0 2.4;0 0;0 2.4;0 0;0 2.4;0 0"/>
+      <g stroke="#8b949e" stroke-width="1.6" stroke-linecap="round" fill="none">
+        <animate attributeName="stroke" dur="12s" repeatCount="indefinite"
+                 keyTimes="0;0.54;0.57;0.92;0.95;1"
+                 values="#8b949e;#8b949e;#f5c453;#f5c453;#8b949e;#8b949e"/>
+        <circle r="3.4"/>
+        <line x1="0" y1="-6" x2="0" y2="-7.6"/>
+        <line x1="4.2" y1="-4.2" x2="5.4" y2="-5.4"/>
+        <line x1="6" y1="0" x2="7.6" y2="0"/>
+        <line x1="4.2" y1="4.2" x2="5.4" y2="5.4"/>
+        <line x1="-4.2" y1="4.2" x2="-5.4" y2="5.4"/>
+        <line x1="-6" y1="0" x2="-7.6" y2="0"/>
+        <line x1="-4.2" y1="-4.2" x2="-5.4" y2="-5.4"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ============ EXTERNAL MONITOR (follows in sync) ============ -->
+  <g>
+    <rect x="500" y="120" width="190" height="118" rx="8" fill="#2a2f37" stroke="#3a4048"/>
+    <rect x="507" y="127" width="176" height="96" rx="4" fill="#0b0e14"/>
+    <rect x="507" y="127" width="176" height="96" rx="4" fill="url(#screenGlow)" opacity="0.31">
+      <animate attributeName="opacity" dur="12s" repeatCount="indefinite"
+               keyTimes="0;0.08;0.25;0.42;0.5;0.6;0.68;0.78;0.86;0.94;1"
+               values="0.31;0.34;0.88;0.38;0.31;0.6;0.85;0.85;0.56;0.34;0.31"/>
+    </rect>
+    <rect x="590" y="238" width="10" height="18" fill="#30363d"/>
+    <path d="M572 256 H618 L632 268 H558 Z" fill="#21262d" stroke="#3a4048"/>
+  </g>
+
+  <!-- ============ SYNC LINK laptop -> external ============ -->
+  <line x1="290" y1="174" x2="500" y2="174" stroke="#3fb950" stroke-width="2" opacity="0.3"/>
+  <line x1="290" y1="174" x2="500" y2="174" stroke="#3fb950" stroke-width="2"
+        stroke-linecap="round" stroke-dasharray="6 6" opacity="0.75">
+    <animate attributeName="stroke-dashoffset" dur="0.8s" repeatCount="indefinite" values="0;-12"/>
+  </line>
+  <!-- pulse when the ambient sensor drives the change (first half) -->
+  <circle cx="296" cy="174" r="3.6" fill="#3fb950" opacity="0">
+    <animate attributeName="opacity" dur="12s" repeatCount="indefinite"
+             keyTimes="0;0.15;0.16;0.3;0.32;1" values="0;0;1;1;0;0"/>
+    <animate attributeName="cx" dur="12s" repeatCount="indefinite"
+             keyTimes="0;0.16;0.3;1" values="296;296;494;494"/>
+  </circle>
+  <!-- pulse when the brightness key drives the change (second half) -->
+  <circle cx="296" cy="174" r="3.6" fill="#3fb950" opacity="0">
+    <animate attributeName="opacity" dur="12s" repeatCount="indefinite"
+             keyTimes="0;0.59;0.6;0.72;0.74;1" values="0;0;1;1;0;0"/>
+    <animate attributeName="cx" dur="12s" repeatCount="indefinite"
+             keyTimes="0;0.6;0.72;1" values="296;296;494;494"/>
+  </circle>
+  <!-- sync badge -->
+  <circle cx="395" cy="174" r="15" fill="#161b22" stroke="#30363d"/>
+  <g transform="translate(395,174)">
+    <animateTransform attributeName="transform" type="rotate" dur="8s" repeatCount="indefinite"
+                      additive="sum" from="0" to="360"/>
+    <g fill="none" stroke="#3fb950" stroke-width="1.8" stroke-linecap="round">
+      <path d="M-7 -1.6 A7 7 0 0 1 4.6 -5.4"/>
+      <path d="M7 1.6 A7 7 0 0 1 -4.6 5.4"/>
+    </g>
+    <path d="M4.6 -5.4 l0.4 -3.6 l-3.4 1.8 z" fill="#3fb950"/>
+    <path d="M-4.6 5.4 l-0.4 3.6 l3.4 -1.8 z" fill="#3fb950"/>
+  </g>
+
+  <!-- ============ SHARED BRIGHTNESS METER ============ -->
+  <g transform="translate(246,286)">
+    <circle r="4" fill="url(#sunCore)"/>
+    <g stroke="#f0b429" stroke-width="1.5" stroke-linecap="round">
+      <line x1="0" y1="-6" x2="0" y2="-7.6"/>
+      <line x1="4.2" y1="-4.2" x2="5.4" y2="-5.4"/>
+      <line x1="6" y1="0" x2="7.6" y2="0"/>
+      <line x1="4.2" y1="4.2" x2="5.4" y2="5.4"/>
+      <line x1="0" y1="6" x2="0" y2="7.6"/>
+      <line x1="-4.2" y1="4.2" x2="-5.4" y2="5.4"/>
+      <line x1="-6" y1="0" x2="-7.6" y2="0"/>
+      <line x1="-4.2" y1="-4.2" x2="-5.4" y2="-5.4"/>
+    </g>
+  </g>
+  <rect x="260" y="282" width="300" height="8" rx="4" fill="#21262d"/>
+  <rect x="260" y="282" width="45" height="8" rx="4" fill="url(#meterFill)">
+    <animate attributeName="width" dur="12s" repeatCount="indefinite"
+             keyTimes="0;0.08;0.25;0.42;0.5;0.6;0.68;0.78;0.86;0.94;1"
+             values="45;60;285;75;45;165;270;270;150;60;45"/>
+  </rect>
+  <circle cx="305" cy="286" r="7" fill="#f5c453" stroke="#161b22" stroke-width="2">
+    <animate attributeName="cx" dur="12s" repeatCount="indefinite"
+             keyTimes="0;0.08;0.25;0.42;0.5;0.6;0.68;0.78;0.86;0.94;1"
+             values="305;320;545;335;305;425;530;530;410;320;305"/>
+  </circle>
+  <circle cx="574" cy="286" r="3" fill="none" stroke="#8b949e" stroke-width="1.5"/>
+
+  <!-- ============ CAPTION ============ -->
+  <!-- ambient (first half) -->
+  <g>
+    <animate attributeName="opacity" dur="12s" repeatCount="indefinite"
+             keyTimes="0;0.42;0.47;0.95;1" values="1;1;0;0;1"/>
+    <g transform="translate(226,318)">
+      <circle r="4" fill="url(#sunCore)"/>
+      <g stroke="#f0b429" stroke-width="1.4" stroke-linecap="round">
+        <line x1="0" y1="-6" x2="0" y2="-7.4"/>
+        <line x1="4.2" y1="-4.2" x2="5.2" y2="-5.2"/>
+        <line x1="6" y1="0" x2="7.4" y2="0"/>
+        <line x1="4.2" y1="4.2" x2="5.2" y2="5.2"/>
+        <line x1="0" y1="6" x2="0" y2="7.4"/>
+        <line x1="-4.2" y1="4.2" x2="-5.2" y2="5.2"/>
+        <line x1="-6" y1="0" x2="-7.4" y2="0"/>
+        <line x1="-4.2" y1="-4.2" x2="-5.2" y2="-5.2"/>
+      </g>
+    </g>
+    <text x="242" y="322" font-size="13" fill="#c9d1d9">Sun rises and sets - the ambient sensor tracks both displays together</text>
+  </g>
+  <!-- keyboard (second half) -->
+  <g opacity="0">
+    <animate attributeName="opacity" dur="12s" repeatCount="indefinite"
+             keyTimes="0;0.5;0.55;0.92;0.97;1" values="0;0;1;1;0;0"/>
+    <rect x="215" y="311" width="15" height="14" rx="3" fill="#e3b341" fill-opacity="0.14"
+          stroke="#e3b341" stroke-width="1.3"/>
+    <path d="M219.5 320 L222.5 316 L225.5 320" fill="none" stroke="#f5c453" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="238" y="322" font-size="13" fill="#c9d1d9">Brightness key on the laptop - the external display follows</text>
+  </g>
+
+  <!-- crisp card border on top -->
+  <rect x="10" y="10" width="800" height="360" rx="14" fill="none" stroke="#30363d"/>
+</svg>

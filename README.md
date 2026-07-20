@@ -20,6 +20,10 @@ brightness keys itself and shows a brightness overlay, so the keys keep
 working exactly as they do on the built-in display (see
 [Clamshell mode](#clamshell-mode)).
 
+<p align="center">
+  <img src="Resources/images/how-it-works.svg" width="830" alt="Animation: a laptop and an external display kept at the same brightness - a brightness key on the laptop drives both, and the ambient light sensor drives both together">
+</p>
+
 ## Install
 
 ```sh
