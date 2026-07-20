@@ -29,7 +29,7 @@ struct BrightSync: ParsableCommand {
               brightsync --once              sync once and exit
               brightsync --set-external 40   one-off manual luminance write
             """,
-        version: "0.5.0"
+        version: BuildMetadata.version
     )
 
     @Flag(help: "List displays and current values, then exit.")
