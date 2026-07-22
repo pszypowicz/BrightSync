@@ -16,6 +16,12 @@ import Foundation
 /// owns a virtual brightness instead: ClamshellKeyTap feeds key presses to
 /// stepBrightness, which walks the last known value in native-sized steps
 /// through the same write path.
+///
+/// A single write is not trusted around topology changes: displays coming
+/// back from sleep or replug acknowledge the I2C transaction and then drop
+/// it, or refuse the bus entirely for a few seconds. Every rescan therefore
+/// opens a settle window that reads the luminance back once per second and
+/// rewrites until the value sticks or the window runs out.
 final class SyncEngine {
     /// Notification callbacks are C function pointers without context, so the
     /// engine is reachable through this global. Set once at startup.
@@ -23,7 +29,7 @@ final class SyncEngine {
 
     private struct Target {
         let service: IOAVService
-        let maxLuminance: Int
+        var maxLuminance: Int
         var lastWritten: Int?
         /// Set while writes fail so the failure and the recovery are logged
         /// once each instead of once per keypress.
@@ -65,6 +71,7 @@ final class SyncEngine {
         queue.async {
             self.rescanLocked()
             self.syncCurrentLocked()
+            self.beginSettleLocked()
         }
     }
 
@@ -74,6 +81,7 @@ final class SyncEngine {
         queue.sync {
             self.rescanLocked()
             self.syncCurrentLocked()
+            self.beginSettleLocked()
         }
     }
 
@@ -158,6 +166,7 @@ final class SyncEngine {
                 self.queue.async {
                     self.rescanLocked()
                     self.syncCurrentLocked()
+                    self.beginSettleLocked()
                 }
                 self.registerForNotifications()
             }
@@ -217,15 +226,21 @@ final class SyncEngine {
     }
 
     private func syncCurrentLocked() {
+        guard let value = currentInternalBrightnessLocked() else { return }
+        write(value)
+    }
+
+    /// The value the sync should mirror right now: the built-in panel's live
+    /// brightness when it is online, else the virtual brightness clamshell
+    /// key presses drive - so a display attached with the lid closed is
+    /// aligned without waiting for a key press.
+    private func currentInternalBrightnessLocked() -> Double? {
         if let display = lock.withLock({ builtin }),
             let brightness = DisplayServices.brightness(of: display) {
             lock.withLock { lastBrightness = brightness }
-            write(brightness)
-        } else if let value = lock.withLock({ lastBrightness }) {
-            // Clamshell: push the virtual brightness so a display attached
-            // with the lid closed is aligned without waiting for a key press.
-            write(value)
+            return brightness
         }
+        return lock.withLock { lastBrightness }
     }
 
     private func drain() {
@@ -250,6 +265,7 @@ final class SyncEngine {
         var current = targets
         lock.unlock()
 
+        var startedFailing = false
         for index in current.indices {
             let value = Int((percent / 100 * Double(current[index].maxLuminance)).rounded())
             guard current[index].lastWritten != value else { continue }
@@ -263,6 +279,7 @@ final class SyncEngine {
             } else if !current[index].failing {
                 current[index].failing = true
                 log("ddc: write failed (display asleep or DDC unavailable)")
+                startedFailing = true
             }
         }
 
@@ -273,6 +290,89 @@ final class SyncEngine {
             targets = current
         }
         lock.unlock()
+
+        // A fresh failure gets a settle window of its own, so a display whose
+        // DDC dropped out mid-session heals without waiting for an unrelated
+        // brightness event or topology change.
+        if startedFailing, settleRoundsLeft == 0 {
+            beginSettleLocked()
+        }
+    }
+
+    // MARK: - Settle window
+
+    /// One tick per second after a rescan or a fresh write failure: read each
+    /// target's luminance back, rewrite on mismatch, stop as soon as every
+    /// readable display matches. Displays that never answer reads get blind
+    /// rewrites for the whole window.
+    private static let settleRounds = 10
+    private static let settleInterval: TimeInterval = 1
+
+    // Settle state; touched only on the DDC queue. settleRoundsLeft is
+    // nonzero exactly while a window is active.
+    private var settleRoundsLeft = 0
+    private var settleLoggedRewrite = false
+    private var settleWork: DispatchWorkItem?
+
+    private func beginSettleLocked() {
+        settleRoundsLeft = Self.settleRounds
+        settleLoggedRewrite = false
+        scheduleSettleTick()
+    }
+
+    private func scheduleSettleTick() {
+        settleWork?.cancel()
+        let work = DispatchWorkItem { self.settleTickLocked() }
+        settleWork = work
+        queue.asyncAfter(deadline: .now() + Self.settleInterval, execute: work)
+    }
+
+    private func settleTickLocked() {
+        settleRoundsLeft -= 1
+        guard let brightness = currentInternalBrightnessLocked() else {
+            settleRoundsLeft = 0
+            return
+        }
+        let percent = config.luminancePercent(forInternal: brightness)
+
+        lock.lock()
+        var current = targets
+        lock.unlock()
+
+        var unsettled = false
+        for index in current.indices {
+            if let luminance = DDC.readLuminance(current[index].service) {
+                // Also corrects a max that a failed rescan read left assumed.
+                current[index].maxLuminance = luminance.max
+                let intended = Int((percent / 100 * Double(luminance.max)).rounded())
+                if luminance.current == intended {
+                    current[index].lastWritten = intended
+                    continue
+                }
+            }
+            current[index].lastWritten = nil
+            unsettled = true
+        }
+
+        lock.lock()
+        if targets.count == current.count { targets = current }
+        lock.unlock()
+
+        guard unsettled else {
+            settleRoundsLeft = 0
+            if verbose { log("ddc: luminance confirmed") }
+            return
+        }
+        if !settleLoggedRewrite {
+            settleLoggedRewrite = true
+            log("ddc: display did not apply luminance; rewriting")
+        }
+        syncCurrentLocked()
+        if settleRoundsLeft > 0 {
+            scheduleSettleTick()
+        } else {
+            log("ddc: display did not confirm luminance; giving up until the next change")
+        }
     }
 }
 
